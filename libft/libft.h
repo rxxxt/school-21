@@ -6,7 +6,7 @@
 /*   By: tredfort <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:09:14 by tredfort          #+#    #+#             */
-/*   Updated: 2020/11/15 22:03:23 by tredfort         ###   ########.fr       */
+/*   Updated: 2020/12/11 19:18:08 by tredfort         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct		s_list
 char				*ft_itoa(int n);
 char				**ft_split(char const *s, char c);
 char				*ft_strchr(const char *s, int c);
+char				*ft_strcpy(char *dest, char *src);
 char				*ft_strdup(const char *s1);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
@@ -40,6 +41,7 @@ int					ft_isdigit(int c);
 int					ft_isprint(int c);
 int					ft_lstsize(t_list *lst);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
+int					ft_nbrlen(const char *s);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
