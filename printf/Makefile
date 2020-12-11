@@ -28,10 +28,10 @@ all: $(NAME)
 $(NAME): $(OBJECTS)
 	ar rcs $@ $(OBJECTS)
 clean:
-	/bin/rm -f $(OBJECTS)
+	rm -f $(OBJECTS)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
