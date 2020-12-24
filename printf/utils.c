@@ -36,16 +36,6 @@ int		putnchar(char c, int max)
 	return (i);
 }
 
-int		putnstr(char *s, int max)
-{
-	int count;
-
-	count = 0;
-	while (s && *s && max-- > 0)
-		count += putnchar(*s++, 1);
-	return (count);
-}
-
 int		puthex_un(unsigned int n, char x)
 {
 	int count;
@@ -79,4 +69,18 @@ int		nbrlen(size_t nb, char x)
 		nb /= n;
 	}
 	return (len);
+}
+
+int		strnbrlen(const char *s, int p)
+{
+	int	count;
+
+	count = 0;
+	if (p == 1)
+		while (s && *s >= '0' && *s <= '9' && (s++))
+			count++;
+	else if (p == 2)
+		while (s && *s && s++)
+			count++;
+	return (count);
 }

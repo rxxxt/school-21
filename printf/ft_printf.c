@@ -12,63 +12,74 @@
 
 #include "printf.h"
 
+int		ft_atoi(const char **str)
+{
+	int nb;
+	int sign;
+
+	nb = 0;
+	sign = 1;
+	while (*(*str) && ((*(*str) >= '\t' && *(*str) <= '\r') || *(*str) == ' '))
+		(*str)++;
+	if (*(*str) == '-')
+		sign = -1;
+	if (*(*str) == '-' || *(*str) == '+')
+		(*str)++;
+	while (*(*str) && *(*str) >= '0' && *(*str) <= '9')
+		nb = nb * 10 + *(*str)++ - '0';
+	return (sign * nb);
+}
+
 void	initialize(t_opt *opt)
 {
 	opt->zero = 0;
 	opt->minus = 0;
-	opt->f_prec = 0;
 	opt->plus = 0;
 	opt->space = 0;
 	opt->hash = 0;
-	opt->wth = 0;
-	opt->prec = 0;
+	opt->width = 0;
+	opt->precision = -1;
 }
 
-void	correction_options(t_opt *opt)
+void	parser(const char **s, t_opt *opt, va_list type)
 {
-	if (opt->wth < 0 && (opt->minus = 1))
-		opt->wth *= -1;
-	if (opt->prec < 0 && !(opt->f_prec = 0))
-		opt->prec = 0;
-	if ((opt->prec && (opt->f_prec = 1)) || (opt->f_prec && !opt->prec))
-		opt->zero = 0;
-	if (opt->minus)
-		opt->zero = 0;
+	if (*(*s) == '0' && (opt->zero = 1) && ++(*s))
+		parser(s, opt, type);
+	else if (*(*s) == '-' && (opt->minus = 1) && ++(*s))
+		parser(s, opt, type);
+	else if (*(*s) == ' ' && (opt->space = 1) && ++(*s))
+		parser(s, opt, type);
+	else if (*(*s) == '+' && (opt->plus = 1) && ++(*s))
+		parser(s, opt, type);
+	else if (*(*s) == '#' && (opt->hash = 1) && ++(*s))
+		parser(s, opt, type);
+	else if (*(*s) == '*' && ++(*s) && ((opt->width = va_arg(type, int)) ||
+		!opt->width))
+		parser(s, opt, type);
+	else if (*(*s) >= '0' && *(*s) <= '9' && ((opt->width = ft_atoi(s)) ||
+		!opt->width))
+		parser(s, opt, type);
+	else if (*(*s) == '.' && *((*s) + 1) == '*' && (*s += 2) &&
+		((opt->precision = va_arg(type, int)) || !opt->precision))
+		parser(s, opt, type);
+	else if (*(*s) == '.' && *((*s) + 1) >= '0' && *((*s) + 1) <= '9' && ++(*s)
+		&& ((opt->precision = ft_atoi(s)) || !opt->precision))
+		parser(s, opt, type);
+	else if (*(*s) == '.' && !(opt->precision = 0) && ++(*s))
+		parser(s, opt, type);
+}
+
+int		processing(const char **s, va_list type, t_opt *opt)
+{
+	int	b_p;
+
+	b_p = 0;
 	if (opt->plus)
 		opt->space = 0;
-}
-
-int		set_options(const char *s, t_opt *o, va_list type, int deep)
-{
-	if (*s && *s == '-' && (o->minus = 1))
-		return (set_options(s + 1, o, type, deep + 1));
-	else if (*s && *s == '0' && (o->zero = 1))
-		return (set_options(s + 1, o, type, deep + 1));
-	else if (*s && *s == ' ' && (o->space = 1))
-		return (set_options(s + 1, o, type, deep + 1));
-	else if (*s && *s == '+' && (o->plus = 1))
-		return (set_options(s + 1, o, type, deep + 1));
-	else if (*s && *s == '#' && (o->hash = 1))
-		return (set_options(s + 1, o, type, deep + 1));
-	else if (*s && *s == '*' && ((o->wth = va_arg(type, int)) || !o->wth))
-		return (set_options(s + 1, o, type, deep + 1));
-	else if (*s && *s >= '0' && *s <= '9' && ((o->wth = ft_atoi(s)) || !o->wth))
-		return (set_options(s + strnbrlen(s, 1), o, type,
-					deep + strnbrlen(s, 1)));
-	else if (*s && *s == '.' && (o->f_prec = 1) && *(s + 1) == '*' &&
-			((o->prec = va_arg(type, int)) || !o->prec))
-		return (set_options(s + 2, o, type, deep + 2));
-	else if (*s && *s == '.' && *(s + 1) >= '0' && *(s + 1) <= '9' &&
-			((o->prec = ft_atoi(s + 1)) || !o->prec))
-		return (set_options(s + strnbrlen(s + 1, 1) + 1, o, type, deep +
-					strnbrlen(s + 1, 1) + 1));
-	else if (*s == '.' && !(o->prec = 0) && (*(s + 1) < '0' || *(s + 1) > '9'))
-		return (set_options(s + 1, o, type, deep + 1));
-	return (deep);
-}
-
-int		parser(const char **s, va_list type, t_opt *opt, int b_p)
-{
+	if (opt->width < 0 && (opt->minus = 1))
+		opt->width *= -1;
+	if (opt->precision >= 0 || opt->minus)
+		opt->zero = 0;
 	if (*(*s) && *(*s) == '%' && *(*s)++)
 		b_p += printchar('%', opt);
 	else if (*(*s) && *(*s) == 'c' && *(*s)++)
@@ -87,11 +98,11 @@ int		parser(const char **s, va_list type, t_opt *opt, int b_p)
 int		ft_printf(const char *format, ...)
 {
 	int		b_p;
-	t_opt	*opt;
+	t_opt	opt;
 	va_list	type;
 
 	b_p = 0;
-	if (!format || !(opt = (t_opt *)malloc(sizeof(t_opt))))
+	if (!format)
 		return (b_p);
 	va_start(type, format);
 	while (format && *format)
@@ -100,14 +111,12 @@ int		ft_printf(const char *format, ...)
 			b_p += putnchar(*format++, 1);
 		if (*format && *format == '%' && *(++format))
 		{
-			initialize(opt);
-			format += set_options(format, opt, type, 0);
-			correction_options(opt);
+			initialize(&opt);
+			parser(&format, &opt, type);
 			if (*format)
-				b_p += parser(&format, type, opt, 0);
+				b_p += processing(&format, type, &opt);
 		}
 	}
-	free(opt);
 	va_end(type);
 	return (b_p);
 }
