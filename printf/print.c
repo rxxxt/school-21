@@ -64,6 +64,7 @@ int		printnbr(int n, t_opt *opt, int count)
 	sign = (n < 0 ? 1 : 0);
 	nb = (unsigned int)((n < 0 ? -1 : 1) * n);
 	pre = opt->precision - nbrlen(nb, 'u');
+	opt->space = (sign ? 0 : opt->space);
 	wth = opt->width - opt->precision + (pre < 0 ? pre : 0) - opt->space;
 	wth += (!nb && !opt->precision ? 1 : 0) - (opt->plus ? 1 : sign);
 	count += putnchar(' ', opt->space);
@@ -124,8 +125,8 @@ int		printstr(char *s, t_opt *opt)
 		count += putnchar(' ', wth);
 	if (opt->zero && wth > 0)
 		count += putnchar('0', wth);
-	while (pre > 0 && pre--)
-		count += putnchar(*s++, 1);
+	if (pre > 0)
+		count += write(1, s, pre);
 	if (opt->minus && wth > 0)
 		count += putnchar(' ', wth);
 	return (count);

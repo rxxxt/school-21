@@ -44,7 +44,7 @@ int			get_next_line(int fd, char **line)
 	size_t		rs;
 
 	if (fd < 0 || !line || BUFFER_SIZE < 1 || !(buf = malloc(sizeof(char) *
-			(BUFFER_SIZE + 1))))
+                                                             (BUFFER_SIZE + 1))))
 		return (-1);
 	if (read(fd, buf, 0) < 0)
     {
@@ -52,7 +52,7 @@ int			get_next_line(int fd, char **line)
         return (-1);
     }
 	ptr_n = next_line(tmp_buf, line);
-	while (!ptr_n && (rs = read(fd, buf, BUFFER_SIZE)) > 0)
+	while (ptr_n == NULL && (rs = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[rs] = '\0';
 		if ((ptr_n = ft_strchr(buf, '\n')))

@@ -6,7 +6,7 @@
 /*   By: tredfort <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/01 15:53:41 by tredfort          #+#    #+#             */
-/*   Updated: 2020/11/01 21:02:00 by tredfort         ###   ########.fr       */
+/*   Updated: 2020/12/11 17:37:56 by tredfort         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ char	*ft_strnstr(const char *str, const char *find, size_t len)
 	size_t	i;
 	size_t	j;
 
-    if (!str)
-        return (0);
+	if (!str)
+		return (0);
 	if (!*find)
 		return ((char*)str);
 	i = 0;

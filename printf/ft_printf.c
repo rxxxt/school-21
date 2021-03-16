@@ -43,6 +43,35 @@ void	initialize(t_opt *opt)
 
 void	parser(const char **s, t_opt *opt, va_list type)
 {
+	while (*(*s) && (*(*s) == '-' || *(*s) == '+' || *(*s) == ' ' || *(*s) ==
+	'.' || *(*s) == '#' || *(*s) == '*' || (*(*s) >= '0' && *(*s) <= '9')))
+	{
+		if (*(*s) == '0' && ++(*s))
+			opt->zero = 1;
+		else if (*(*s) == '-' && ++(*s))
+			opt->minus = 1;
+		else if (*(*s) == ' ' && ++(*s))
+			opt->space = 1;
+		else if (*(*s) == '+' && !(opt->space = 0) && ++(*s))
+			opt->plus = 1;
+		else if (*(*s) == '#' && ++(*s))
+			opt->hash = 1;
+		else if (*(*s) == '*' && ++(*s))
+			opt->width = va_arg(type, int);
+		else if (*(*s) >= '0' && *(*s) <= '9')
+			opt->width = ft_atoi(s);
+		else if (*(*s) == '.' && *((*s) + 1) == '*' && (*s += 2))
+			opt->precision = va_arg(type, int);
+		else if (*(*s) == '.' && *((*s) + 1) >= '0' && *((*s) + 1) <= '9' && ++(*s))
+			opt->precision = ft_atoi(s);
+		else if (*(*s) == '.' && ++(*s))
+			opt->precision = 0;
+	}
+}
+
+/*
+void	parser(const char **s, t_opt *opt, va_list type)
+{
 	if (*(*s) == '0' && (opt->zero = 1) && ++(*s))
 		parser(s, opt, type);
 	else if (*(*s) == '-' && (opt->minus = 1) && ++(*s))
@@ -68,6 +97,7 @@ void	parser(const char **s, t_opt *opt, va_list type)
 	else if (*(*s) == '.' && !(opt->precision = 0) && ++(*s))
 		parser(s, opt, type);
 }
+*/
 
 int		processing(const char **s, va_list type, t_opt *opt)
 {

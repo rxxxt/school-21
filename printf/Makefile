@@ -23,9 +23,9 @@ INCLUDES = ./
 all: $(NAME)
 
 %o : %c printf.h
-	gcc $(FLAGS) -I$(INCLUDES) $< -o $@
+	gcc $(FLAGS) -I$(INCLUDES) 	
 
-$(NAME): $(OBJECTS)
+	
 	ar rcs $@ $(OBJECTS)
 clean:
 	rm -f $(OBJECTS)

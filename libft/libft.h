@@ -6,7 +6,7 @@
 /*   By: tredfort <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/29 13:09:14 by tredfort          #+#    #+#             */
-/*   Updated: 2020/12/11 19:18:08 by tredfort         ###   ########.fr       */
+/*   Updated: 2021/02/08 13:14:36 by tredfort         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct		s_list
 }					t_list;
 
 char				*ft_itoa(int n);
+char				*ft_remove_chars(char *str, char *set);
 char				**ft_split(char const *s, char c);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strcpy(char *dest, char *src);
@@ -34,6 +35,8 @@ char				*ft_strrchr(const char *s, int c);
 char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 int					ft_atoi(const char *str);
+int					ft_atoi_and_bias(char **str);
+int					ft_digit_capacity(int nb);
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
 int					ft_isascii(int c);
@@ -42,6 +45,8 @@ int					ft_isprint(int c);
 int					ft_lstsize(t_list *lst);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 int					ft_nbrlen(const char *s);
+int					ft_revstrncmp(char *s1, char *s2, int n);
+int					ft_strcmp(char *s1, char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
