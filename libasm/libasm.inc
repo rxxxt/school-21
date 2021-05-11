@@ -1,0 +1,13 @@
+extern		_ft_strlen
+extern		_ft_strcpy
+extern		_ft_strcmp
+extern		_ft_write
+extern		_ft_read
+extern		_ft_strdup
+extern		_malloc
+extern		_free
+extern		___error
+extern		_ft_list_size
+extern		_ft_list_push_front
+extern		_ft_list_remove_if
+extern		_deb
