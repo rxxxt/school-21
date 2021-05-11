@@ -6,7 +6,6 @@ a.out.dSYM
 *.h.gch
 test/
 *.swp
-printf
 minishell
 get_next_line
 libft
