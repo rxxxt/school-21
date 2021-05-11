@@ -7,7 +7,5 @@ a.out.dSYM
 test/
 *.swp
 minishell
-get_next_line
-libft
 CMakeLists.txt
 cmake-build-debug
