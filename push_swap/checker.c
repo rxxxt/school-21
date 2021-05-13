@@ -12,15 +12,33 @@
 
 #include "includes/push_swap.h"
 
-void	fill_stack(t_stack  *stack, char **argv, int count)
+int	correct_number(char *str)
 {
-	int		x;
+	while (*str == ' ')
+		str++;
+	if (*str == '-' || *str == '+')
+		str++;
+	if (!*str)
+		return (0);
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+void	fill_stack(t_stack *stack, char **argv, int count)
+{
+	long nb;
 
 	while (count > 0)
 	{
-		if ()
-		x =
-		push(stack, )
+		nb = ft_atol(argv[count]);
+		if (!correct_number(argv[count]) || nb > INT32_MAX || nb < INT32_MIN)
+			ft_exit();
+		push(stack, (int)nb);
 		count--;
 	}
 }
@@ -32,13 +50,12 @@ int	main(int argc, char **argv)
 
 	if (argc > 1)
 	{
-		error = 0;
 		stack = initialize_stacks();
 		if (!stack)
 			exit(1);
-		fill_stack(stack->a, argv, argc, &error);
-		executing_instructions(stack->a, stack->b, &error);
-		if (is_sorted(stack->a) && (stack->b)->size == 0)
+		fill_stack(stack->a, argv, argc);
+		executing_instructions(stack->a, stack->b);
+		if (is_sorted(stack->a) && stack->b->size == 0)
 			write(STDOUT_FILENO, "OK\n", 3);
 		else
 			write(STDOUT_FILENO, "KO\n", 3);

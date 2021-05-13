@@ -1,6 +1,12 @@
 #include "../../includes/stack.h"
 
-int	processing(char *line, t_stacks *stacks)
+void	ft_exit(void)
+{
+	ft_putendl_fd("Error", STDERR_FILENO);
+	exit(EXIT_FAILURE);
+}
+
+void	processing(char *line, t_stacks *stacks)
 {
 	if (!ft_strcmp(line, "sa") && !line[2])
 		swap_a(stacks);
@@ -25,8 +31,7 @@ int	processing(char *line, t_stacks *stacks)
 	else if (!ft_strcmp(line, "rrr") && !line[3])
 		reverse_rotate_a_and_b(stacks);
 	else
-		return(write(STDERR_FILENO, "Error\n", 6));
-	return (0);
+		ft_exit();
 }
 
 t_stacks 	*initialize_stacks(void)

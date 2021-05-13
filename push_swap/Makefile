@@ -42,7 +42,7 @@ $(LIBFT):
 	make -C libft
 
 $(NAME): $(OBJS)
-	$(CC) $^ -Llibft -lft -o $@
+	$(CC) $^ LIBFT -o $@
 
 clean:
 	rm -rf $(DIR_OBJS)

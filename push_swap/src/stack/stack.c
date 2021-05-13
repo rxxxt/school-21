@@ -60,7 +60,7 @@ int	pop(t_stack *stack)
 	t_node	*tmp;
 	int		x;
 
-	x = -1;
+	x = 0;
 	if (!stack->size)
 		write(STDERR_FILENO, "Error: stack underflow\n", 23);
 	else
@@ -78,7 +78,7 @@ int	pop_back(t_stack *stack)
 	t_node	*tmp;
 	int		x;
 
-	x = -1;
+	x = 0;
 	if (!stack->size)
 		write(STDERR_FILENO, "Error: stack underflow\n", 23);
 	else
