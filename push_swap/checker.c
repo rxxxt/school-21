@@ -45,6 +45,20 @@ void	fill_stack(t_stack  *stack, char **argv, int count)
 	}
 }
 
+void	swap_top_two(t_stack *stack)
+{
+	int	tmp;
+
+	if (stack && stack->head && stack->size > 1)
+	{
+		tmp = stack->head->data;
+		stack->head->data = stack->head->next->data;
+		stack->head->next->data = tmp;
+	}
+}
+
+void
+
 int	main(int argc, char **argv)
 {
 	t_stacks	*stack;
