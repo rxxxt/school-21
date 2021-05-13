@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tredfort <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/29 14:03:09 by tredfort          #+#    #+#             */
-/*   Updated: 2021/05/13 23:57:47 by tredfort         ###   ########.fr       */
+/*   Created: 2021/05/13 23:58:43 by tredfort          #+#    #+#             */
+/*   Updated: 2021/05/14 00:03:56 by tredfort         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+long	ft_atol(const char *str)
 {
 	unsigned long	nb;
-	int				sign;
+	long			sign;
 
 	nb = 0;
 	sign = 1;
@@ -27,12 +27,12 @@ int	ft_atoi(const char *str)
 		str++;
 	while (*str && *str >= '0' && *str <= '9')
 	{
-		if (sign == -1 && nb > INT32_MAX)
-			return (INT32_MIN);
-		if (sign == 1 && nb >= INT32_MAX)
-			return (INT32_MAX);
+		if (sign == -1 && nb > LONG_MAX)
+			return (LONG_MIN);
+		if (sign == 1 && nb >= LONG_MAX)
+			return (LONG_MAX);
 		nb = nb * 10 + *str - '0';
 		str++;
 	}
-	return (sign * (int)nb);
+	return (sign * (long)nb);
 }
