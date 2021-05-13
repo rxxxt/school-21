@@ -15,13 +15,8 @@
 
 # include "../libft/libft.h"
 # include "stack.h"
-#
 
-typedef struct s_stacks
-{
-	t_stack	*a;
-	t_stack	*b;
-}			t_stacks;
+
 
 
 #endif

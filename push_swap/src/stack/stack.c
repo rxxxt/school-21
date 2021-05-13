@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "../../includes/stack.h"
 
 t_node	*ft_nodenew(int x)
 {
@@ -39,12 +39,28 @@ void	push(t_stack *stack, int x)
 	}
 }
 
+void	push_back(t_stack *stack, int x)
+{
+	t_node	*node;
+
+	if (stack->size == STACK_SIZE)
+		write(STDERR_FILENO, "Error: stack overflow\n", 22);
+	else
+	{
+		node = stack->head;
+		while (node->next)
+			node = node->next;
+		node->next = ft_nodenew(x);
+		++stack->size;
+	}
+}
+
 int	pop(t_stack *stack)
 {
 	t_node	*tmp;
 	int		x;
 
-	x = 0;
+	x = -1;
 	if (!stack->size)
 		write(STDERR_FILENO, "Error: stack underflow\n", 23);
 	else
@@ -53,6 +69,26 @@ int	pop(t_stack *stack)
 		x = tmp->data;
 		&stack->head = tmp->next;
 		free(tmp);
+	}
+	return (x);
+}
+
+int	pop_back(t_stack *stack)
+{
+	t_node	*tmp;
+	int		x;
+
+	x = -1;
+	if (!stack->size)
+		write(STDERR_FILENO, "Error: stack underflow\n", 23);
+	else
+	{
+		tmp = stack->head;
+		while (tmp->next && tmp->next->next)
+			tmp = tmp->next;
+		x = tmp->next->data;
+		free(tmp->next);
+		tmp->next = NULL;
 	}
 	return (x);
 }

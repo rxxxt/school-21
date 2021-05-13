@@ -12,26 +12,6 @@
 
 #include "includes/push_swap.h"
 
-t_stacks 	*initialize_stacks(void)
-{
-	t_stacks	*stack;
-
-	stack = malloc(sizeof(t_stacks));
-	if (!stack)
-		return (NULL);
-	stack->a = malloc(sizeof(t_stack));
-	if (!stack->a)
-		return (NULL);
-	stack->b = malloc(sizeof(t_stack));
-	if (!stack->b)
-		return (NULL);
-	(stack->a)->head = NULL;
-	(stack->a)->size = 0;
-	(stack->b)->head = NULL;
-	(stack->b)->size = 0;
-	return (stack);
-}
-
 void	fill_stack(t_stack  *stack, char **argv, int count)
 {
 	int		x;
@@ -44,20 +24,6 @@ void	fill_stack(t_stack  *stack, char **argv, int count)
 		count--;
 	}
 }
-
-void	swap_top_two(t_stack *stack)
-{
-	int	tmp;
-
-	if (stack && stack->head && stack->size > 1)
-	{
-		tmp = stack->head->data;
-		stack->head->data = stack->head->next->data;
-		stack->head->next->data = tmp;
-	}
-}
-
-void
 
 int	main(int argc, char **argv)
 {
