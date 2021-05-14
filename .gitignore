@@ -61,4 +61,7 @@ CMakeLists.txt
 cmake-build-debug
 
 test/
+get_next_line/
+printf/
+minishell/
 *.swp
