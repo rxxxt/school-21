@@ -1,78 +1,113 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tredfort <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/19 20:59:28 by tredfort          #+#    #+#             */
-/*   Updated: 2021/04/19 20:59:31 by tredfort         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/push_swap.h"
 
-int	correct_number(char *str)
+int	is_sorted(t_node *head)
 {
-	while (*str == ' ')
-		str++;
-	if (*str == '-' || *str == '+')
-		str++;
-	if (!*str)
-		return (0);
-	while (*str)
+	while (head && head->next)
 	{
-		if (!ft_isdigit(*str))
+		if (head->data > head->next->data)
 			return (0);
-		str++;
+		head = head->next;
 	}
 	return (1);
 }
 
-void	fill_stack(t_stack *stack, char **argv, int count)
+#include <stdio.h>
+void	print(t_stacks *stacks)
 {
-	long nb;
+	t_node	*a;
+	t_node	*b;
 
-	while (--count > 0)
+	a = stacks->a->head;
+	b = stacks->b->head;
+	printf("  стэк а  |  стэк б  \n");
+	fflush(stdout);
+	while (a || b)
 	{
-		nb = ft_atol(argv[count]);
-		if (!correct_number(argv[count]) || nb > INT32_MAX || nb < INT32_MIN)
+		if (a)
+		{
+			printf("%10d|", a->data);
+			fflush(stdout);
+		}
+		if (b)
+		{
+			printf("%10d\n", b->data);
+			fflush(stdout);
+		}
+		else
+			write(1, "\n", 1);
+		if (a)
+			a = a->next;
+		if (b)
+			b = b->next;
+	}
+	printf("размер стэка а = %d | размер стэка а = %d\n", stacks->a->size,
+		stacks->b->size);
+}
+
+void	executing_instructions(t_stacks *stacks)
+{
+	char	*line;
+	int 	flag;
+
+	flag = 1;
+	print(stacks);
+	while (flag)
+	{
+		flag = get_next_line(STDIN_FILENO, &line);
+		if (flag == -1)
 			ft_exit();
-		push(stack, (int)nb);
+		else if (flag)
+		{
+			processing(line, stacks);
+			print(stacks);
+			free(line);
+		}
 	}
 }
 
-void	print_stack(t_node *head)
+void	processing(char *line, t_stacks *stacks)
 {
-	while (head)
-	{
-		ft_putnbr_fd(head->data, STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		head = head->next;
-	}
+	if (!ft_strcmp(line, "sa") && !line[2])
+		swap_a(stacks);
+	else if (!ft_strcmp(line, "sb") && !line[2])
+		swap_b(stacks);
+	else if (!ft_strcmp(line, "ss") && !line[2])
+		swap_a_and_b(stacks);
+	else if (!ft_strcmp(line, "pa") && !line[2])
+		push_a(stacks);
+	else if (!ft_strcmp(line, "pb") && !line[2])
+		push_b(stacks);
+	else if (!ft_strcmp(line, "ra") && !line[2])
+		rotate_a(stacks);
+	else if (!ft_strcmp(line, "rb") && !line[2])
+		rotate_b(stacks);
+	else if (!ft_strcmp(line, "rr") && !line[2])
+		rotate_a_and_b(stacks);
+	else if (!ft_strcmp(line, "rra") && !line[3])
+		reverse_rotate_a(stacks);
+	else if (!ft_strcmp(line, "rrb") && !line[3])
+		reverse_rotate_b(stacks);
+	else if (!ft_strcmp(line, "rrr") && !line[3])
+		reverse_rotate_a_and_b(stacks);
+	else
+		ft_exit();
 }
 
 int	main(int argc, char **argv)
 {
-	t_stacks	*stack;
+	t_stacks	*stacks;
 
 	if (argc > 1)
 	{
-		stack = initialize_stacks();
-		if (!stack)
-			exit(1);
-		fill_stack(stack->a, argv, argc);
-//		print_stack(stack->a->head);
-//		executing_instructions(stack->a, stack->b);
-//		if (is_sorted(stack->a) && stack->b->size == 0)
-//			write(STDOUT_FILENO, "OK\n", 3);
-//		else
-//			write(STDOUT_FILENO, "KO\n", 3);
+		stacks = initialize_stacks();
+		if (!stacks)
+			exit(EXIT_FAILURE);
+		fill_stack(stacks->a, argv, argc);
+		executing_instructions(stacks);
+		if (is_sorted(stacks->a->head) && stacks->b->size == 0)
+			write(STDOUT_FILENO, "OK\n", 3);
+		else
+			write(STDOUT_FILENO, "KO\n", 3);
 	}
 	return (0);
 }
-
-
-
-
-

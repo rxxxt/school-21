@@ -43,7 +43,8 @@ void		push(t_stack *stack, int x);
 void		push_back(t_stack *stack, int x);
 t_node		*ft_nodenew(int x);
 t_stacks	*initialize_stacks(void);
-void		processing(char *line, t_stacks *stacks);
+int			correct_number(char *str);
+void		fill_stack(t_stack *stack, char **argv, int count);
 void		ft_exit(void);
 
 /*

@@ -69,6 +69,7 @@ int	pop(t_stack *stack)
 		x = tmp->data;
 		stack->head = tmp->next;
 		free(tmp);
+		--stack->size;
 	}
 	return (x);
 }
@@ -89,6 +90,7 @@ int	pop_back(t_stack *stack)
 		x = tmp->next->data;
 		free(tmp->next);
 		tmp->next = NULL;
+		--stack->size;
 	}
 	return (x);
 }

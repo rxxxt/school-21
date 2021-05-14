@@ -10,9 +10,9 @@ DIR_OBJS		:=	objects/
 
 SRCS			:=	push_swap.c						\
 
-SRCS_STACK		:=	operations_push.c				\
+SRCS_STACK		:=	initialize_stacks.c				\
+					operations_push.c				\
 					operations_rotate.c				\
-					processing.c					\
 					operations_reverse_rotate.c		\
 					operations_swap.c				\
 					stack.c							\
