@@ -9,17 +9,15 @@ DIR_SRCS		:=	src/
 DIR_OBJS		:=	objects/
 
 SRCS			:=	push_swap.c						\
-					main.c
 
 SRCS_STACK		:=	operations_push.c				\
 					operations_rotate.c				\
 					processing.c					\
 					operations_reverse_rotate.c		\
 					operations_swap.c				\
-					stack.c
+					stack.c							\
 
 SRCS_BONUS		:=	checker.c						\
-					main.c
 
 OBJS			:=	$(SRCS:.c=.o)
 OBJS_STACK		:=	$(SRCS_STACK:.c=.o)
@@ -35,18 +33,23 @@ OBJS_BONUS 		:=	$(addprefix $(DIR_OBJS), $(OBJS_BONUS))
 
 CC				:=	gcc
 
+DEBUG			:=	-g
+
 FLAGS			:=	#-Wall -Wextra -Werror
 
-all:			$(DIR_OBJS) $(NAME)
+all:				$(DIR_OBJS) $(NAME)
 
 $(DIR_OBJS):
 	mkdir -p $@
 
 $(DIR_OBJS)%.o:		$(DIR_SRCS)stack/%.c includes/push_swap.h
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(DEBUG) $(FLAGS) -c $< -o $@
 
 $(DIR_OBJS)%.o:		$(DIR_SRCS)$(NAME)/%.c includes/push_swap.h
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(DEBUG) $(FLAGS) -c $< -o $@
+
+$(DIR_OBJS)%.o:		$(DIR_SRCS)$(BONUS)/%.c includes/push_swap.h
+	$(CC) $(DEBUG) $(FLAGS) -c $< -o $@
 
 $(LIBFT):
 	make -C libft
@@ -54,18 +57,20 @@ $(LIBFT):
 $(NAME):			$(LIBFT) $(OBJS) $(OBJS_STACK)
 	$(CC) $^ -o $@
 
-bonus: $(LIBFT) $(OBJS_BONUS)
+$(BONUS): $(LIBFT) $(OBJS_STACK) $(OBJS_BONUS)
 	$(CC) $^ -o $@
+
+bonus:				$(DIR_OBJS) $(BONUS)
 
 clean:
 	rm -rf $(DIR_OBJS)
 	make clean -C libft
 
-fclean: clean
+fclean:				clean
 	rm -rf $(NAME)
 	rm -rf $(BONUS)
 	make fclean -C libft
 
-re: fclean all
+re:					fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY:				all clean fclean re bonus

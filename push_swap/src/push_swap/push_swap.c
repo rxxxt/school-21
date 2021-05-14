@@ -1,4 +1,7 @@
-//
-// Created by Twycross Redfort on 5/14/21.
-//
+#include "../../includes/push_swap.h"
 
+int main(int argc, char **argv)
+{
+
+	return (0);
+}

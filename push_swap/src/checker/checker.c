@@ -33,13 +33,22 @@ void	fill_stack(t_stack *stack, char **argv, int count)
 {
 	long nb;
 
-	while (count > 0)
+	while (--count > 0)
 	{
 		nb = ft_atol(argv[count]);
 		if (!correct_number(argv[count]) || nb > INT32_MAX || nb < INT32_MIN)
 			ft_exit();
 		push(stack, (int)nb);
-		count--;
+	}
+}
+
+void	print_stack(t_node *head)
+{
+	while (head)
+	{
+		ft_putnbr_fd(head->data, STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		head = head->next;
 	}
 }
 
@@ -53,6 +62,7 @@ int	main(int argc, char **argv)
 		if (!stack)
 			exit(1);
 		fill_stack(stack->a, argv, argc);
+//		print_stack(stack->a->head);
 //		executing_instructions(stack->a, stack->b);
 //		if (is_sorted(stack->a) && stack->b->size == 0)
 //			write(STDOUT_FILENO, "OK\n", 3);
