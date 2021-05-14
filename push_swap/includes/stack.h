@@ -13,9 +13,10 @@
 #ifndef STACK_H
 #define STACK_H
 
+# include "../libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
-# include "stddef.h"
+# include <stddef.h>
 # define STACK_SIZE (1000)
 
 typedef struct	s_node

@@ -1,48 +1,61 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tredfort <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/04/19 22:45:16 by tredfort          #+#    #+#              #
-#    Updated: 2021/04/19 22:45:18 by tredfort         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME			:=	push_swap
 
-CHECKER =	checker
+BONUS			:=	checker
 
-PUSH_SWAP =	push_swap
+LIBFT			:=	libft/libft.a
 
-LIBFT =		libft/libft.a
+DIR_SRCS		:=	src/
 
-DIR_SRCS =	src
+DIR_OBJS		:=	objects/
 
-DIR_OBJS =	objects
+SRCS			:=	push_swap.c						\
+					main.c
 
-SRCS1 =		checker.c
+SRCS_STACK		:=	operations_push.c				\
+					operations_rotate.c				\
+					processing.c					\
+					operations_reverse_rotate.c		\
+					operations_swap.c				\
+					stack.c
 
-SRCS2 =		main.c
+SRCS_BONUS		:=	checker.c						\
+					main.c
 
-OBJS1 =		$(addprefix $(DIR_OBJS)/, $(SRCS1:.c=.o))
+OBJS			:=	$(SRCS:.c=.o)
+OBJS_STACK		:=	$(SRCS_STACK:.c=.o)
+OBJS_BONUS		:=	$(SRCS_BONUS:.c=.o)
 
-OBJS2 =		$(addprefix $(DIR_OBJS)/, $(SRCS2:.c=.o))
+SRCS			:=	$(addprefix $(DIR_SRCS)$(NAME)/, $(SRCS))
+SRCS_STACK		:=	$(addprefix $(DIR_SRCS)stack/, $(SRCS_STACK))
+SRCS_BONUS		:=	$(addprefix $(DIR_SRCS)$(BONUS)/, $(SRCS_BONUS))
 
-CC = gcc
+OBJS			:=	$(addprefix $(DIR_OBJS), $(OBJS))
+OBJS_STACK		:=	$(addprefix $(DIR_OBJS), $(OBJS_STACK))
+OBJS_BONUS 		:=	$(addprefix $(DIR_OBJS), $(OBJS_BONUS))
 
-FLAGS = #-Wall -Wextra -Werror
+CC				:=	gcc
 
-all: $(LIBFT) $(NAME)
+FLAGS			:=	#-Wall -Wextra -Werror
 
-$(DIR_OBJS)/%.o:$(DIR_SRCS)/%.c includes/push_swap.h
-	mkdir -p objects
+all:			$(DIR_OBJS) $(NAME)
+
+$(DIR_OBJS):
+	mkdir -p $@
+
+$(DIR_OBJS)%.o:		$(DIR_SRCS)stack/%.c includes/push_swap.h
+	$(CC) $(FLAGS) -c $< -o $@
+
+$(DIR_OBJS)%.o:		$(DIR_SRCS)$(NAME)/%.c includes/push_swap.h
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(LIBFT):
 	make -C libft
 
-$(NAME): $(OBJS)
-	$(CC) $^ LIBFT -o $@
+$(NAME):			$(LIBFT) $(OBJS) $(OBJS_STACK)
+	$(CC) $^ -o $@
+
+bonus: $(LIBFT) $(OBJS_BONUS)
+	$(CC) $^ -o $@
 
 clean:
 	rm -rf $(DIR_OBJS)
@@ -50,8 +63,9 @@ clean:
 
 fclean: clean
 	rm -rf $(NAME)
+	rm -rf $(BONUS)
 	make fclean -C libft
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus

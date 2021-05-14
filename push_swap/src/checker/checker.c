@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/push_swap.h"
+#include "../../includes/push_swap.h"
 
 int	correct_number(char *str)
 {
@@ -46,7 +46,6 @@ void	fill_stack(t_stack *stack, char **argv, int count)
 int	main(int argc, char **argv)
 {
 	t_stacks	*stack;
-	int			error;
 
 	if (argc > 1)
 	{
@@ -54,11 +53,16 @@ int	main(int argc, char **argv)
 		if (!stack)
 			exit(1);
 		fill_stack(stack->a, argv, argc);
-		executing_instructions(stack->a, stack->b);
-		if (is_sorted(stack->a) && stack->b->size == 0)
-			write(STDOUT_FILENO, "OK\n", 3);
-		else
-			write(STDOUT_FILENO, "KO\n", 3);
+//		executing_instructions(stack->a, stack->b);
+//		if (is_sorted(stack->a) && stack->b->size == 0)
+//			write(STDOUT_FILENO, "OK\n", 3);
+//		else
+//			write(STDOUT_FILENO, "KO\n", 3);
 	}
 	return (0);
 }
+
+
+
+
+

@@ -6,6 +6,26 @@ void	ft_exit(void)
 	exit(EXIT_FAILURE);
 }
 
+t_stacks 	*initialize_stacks(void)
+{
+	t_stacks	*stack;
+
+	stack = malloc(sizeof(t_stacks));
+	if (!stack)
+		exit(EXIT_FAILURE);
+	stack->a = malloc(sizeof(t_stack));
+	if (!stack->a)
+		exit(EXIT_FAILURE);
+	stack->b = malloc(sizeof(t_stack));
+	if (!stack->b)
+		exit(EXIT_FAILURE);
+	(stack->a)->head = NULL;
+	(stack->a)->size = 0;
+	(stack->b)->head = NULL;
+	(stack->b)->size = 0;
+	return (stack);
+}
+
 void	processing(char *line, t_stacks *stacks)
 {
 	if (!ft_strcmp(line, "sa") && !line[2])
@@ -32,24 +52,4 @@ void	processing(char *line, t_stacks *stacks)
 		reverse_rotate_a_and_b(stacks);
 	else
 		ft_exit();
-}
-
-t_stacks 	*initialize_stacks(void)
-{
-	t_stacks	*stack;
-
-	stack = malloc(sizeof(t_stacks));
-	if (!stack)
-		exit(EXIT_FAILURE);
-	stack->a = malloc(sizeof(t_stack));
-	if (!stack->a)
-		exit(EXIT_FAILURE);
-	stack->b = malloc(sizeof(t_stack));
-	if (!stack->b)
-		exit(EXIT_FAILURE);
-	(stack->a)->head = NULL;
-	(stack->a)->size = 0;
-	(stack->b)->head = NULL;
-	(stack->b)->size = 0;
-	return (stack);
 }

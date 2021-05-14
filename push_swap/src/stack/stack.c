@@ -34,7 +34,7 @@ void	push(t_stack *stack, int x)
 	{
 		new = ft_nodenew(x);
 		new->next = stack->head;
-		&stack->head = new;
+		stack->head = new;
 		++stack->size;
 	}
 }
@@ -67,7 +67,7 @@ int	pop(t_stack *stack)
 	{
 		tmp = stack->head;
 		x = tmp->data;
-		&stack->head = tmp->next;
+		stack->head = tmp->next;
 		free(tmp);
 	}
 	return (x);
