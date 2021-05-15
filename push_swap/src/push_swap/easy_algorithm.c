@@ -73,4 +73,6 @@ void	easy_algorithm(t_stacks *stacks)
 		swap_a(stacks);
 	else if (stacks->a->size == 3 && !is_sorted(stacks->a->head))
 		sorted_three_items(stacks);
+	else if (stacks->a->size == 3 && !is_sorted(stacks->a->head))
+		sorted_three_items(stacks);
 }

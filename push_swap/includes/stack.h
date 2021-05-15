@@ -38,6 +38,8 @@ int			pop(t_stack *stack);
 int			pop_back(t_stack *stack);
 int			correct_number(char *str);
 void		push(t_stack *stack, int x);
+void		push_a(t_stack *a, t_stack *b);
+void		push_b(t_stack *a, t_stack *b);
 void		swap(t_stack *stack);
 void		push_back(t_stack *stack, int x);
 void		swap_a_and_b(t_stack *stack_a, t_stack *stack_b);

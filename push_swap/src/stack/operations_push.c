@@ -30,3 +30,15 @@ void	push_back(t_stack *stack, int x)
 		++stack->size;
 	}
 }
+
+void	push_a(t_stack *a, t_stack *b)
+{
+	if (b->size > 0)
+		push(a, pop(b));
+}
+
+void	push_b(t_stack *a, t_stack *b)
+{
+	if (a->size > 0)
+		push(b, pop(a));
+}

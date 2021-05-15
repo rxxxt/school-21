@@ -56,7 +56,7 @@ void	fill_stack(t_stack *stack, char **argv, int count)
 	while (--count > 0)
 	{
 		arr = ft_split(argv[count], ' ');
-		size = ft_strarr_size(arr);
+		size = (int)ft_strarr_size(arr);
 		while (--size >= 0)
 		{
 			nb = ft_atol(arr[size]);
@@ -64,5 +64,6 @@ void	fill_stack(t_stack *stack, char **argv, int count)
 				ft_exit();
 			push(stack, (int)nb);
 		}
+		ft_free_array(arr);
 	}
 }

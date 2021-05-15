@@ -28,6 +28,8 @@ void	print(t_stacks *stacks)
 			printf("%10d|", a->data);
 			fflush(stdout);
 		}
+		else
+			write(1, "          |", 11);
 		if (b)
 		{
 			printf("%10d\n", b->data);
@@ -53,9 +55,9 @@ void	processing(char *line, t_stacks *stacks)
 	else if (!ft_strcmp(line, "ss") && !line[2])
 		swap_a_and_b(stacks->a, stacks->b);
 	else if (!ft_strcmp(line, "pa") && !line[2])
-		push(stacks->a, pop(stacks->b));
+		push_a(stacks->a, stacks->b);
 	else if (!ft_strcmp(line, "pb") && !line[2])
-		push(stacks->b, pop(stacks->a));
+		push_b(stacks->a, stacks->b);
 	else if (!ft_strcmp(line, "ra") && !line[2])
 		rotate(stacks->a);
 	else if (!ft_strcmp(line, "rb") && !line[2])
