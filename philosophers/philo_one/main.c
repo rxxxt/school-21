@@ -6,7 +6,8 @@ long	get_time_in_ms()
 	double time;
 
 	gettimeofday(&tv, NULL);
-	time = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
+//	time = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
+	time = (tv.tv_sec) + (tv.tv_usec);
 
 	return ((long)time);
 }
@@ -23,10 +24,18 @@ void	set_parameters(t_data *data, int argc, char **argv)
 	data->start = get_time_in_ms();
 }
 
+void	ft_usleep(int time)
+{
+	while ((get_time_in_ms() - g_start) < time)
+		usleep(1);
+}
+
 void	*passed(void *start)
 {
-	usleep(100000);
-	printf("%ld\n", get_time_in_ms() - (long)start);
+	ft_usleep(100000);
+//	usleep(100000);
+	long time = get_time_in_ms() - (long)start;
+	printf("%ld\n", time / 1000);
 	return (NULL);
 }
 
@@ -34,12 +43,14 @@ int main(int argc, char **argv)
 {
 	t_data	data;
 
-	data.start = get_time_in_ms();
+//	data.start = get_time_in_ms();
+	g_start = get_time_in_ms();
 	data.thread = malloc(sizeof(pthread_t) * 2);
-	pthread_create(&data.thread[0], NULL, passed, (void *)data.start);
-	usleep(10000);
-	pthread_create(&data.thread[0], NULL, passed, (void *)data.start);
+	pthread_create(&data.thread[0], NULL, passed, (void *)g_start);
+//	usleep(10000);
+	pthread_create(&data.thread[1], NULL, passed, (void *)g_start);
 	pthread_join(data.thread[0], NULL);
+	pthread_join(data.thread[1], NULL);
 	if (argc >= 5 && argc <= 6)
 	{
 		set_parameters(&data, argc, argv);

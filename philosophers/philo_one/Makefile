@@ -1,26 +1,26 @@
-NAME =		philo_one
+NAME	:=	philo_one
 
-SRCS =		main.c \
-			ft_atoi.c
+SRCS	:=	main.c			\
+			ft_atoi.c		\
 
-OBJS =		$(SRCS:.c=.o)
+OBJS	:=	$(SRCS:.c=.o)
 
-CFLAGS =	#-Wall -Wextra -Werror
+CFLAGS	:=	#-Wall -Wextra -Werror
 
-all: $(NAME)
+all: 	$(NAME)
 
-%.o:%.c philo_one.h
+%.o:	%.c philo_one.h
 	gcc $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS)
+$(NAME):	$(OBJS)
 	gcc $^ -o $@
 
 clean:
 	rm $(OBJS)
 
-fclean: clean
+fclean:		clean
 	rm $(NAME)
 
-re: fclean all
+re:			fclean all
 
-.PHONY: all clean fclean re
+.PHONY:		all clean fclean re
