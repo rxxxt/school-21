@@ -20,7 +20,7 @@ SRCS =		ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 			ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c \
 			ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 			ft_strcpy.c ft_nbrlen.c ft_atoi_and_bias.c ft_revstrncmp.c \
-			ft_remove_chars.c ft_digit_capacity.c ft_strcmp.c \
+			ft_remove_chars.c ft_digit_capacity.c ft_strcmp.c ft_free_array.c \
 			ft_strjoin_and_free.c ft_strarr_size.c ft_atol.c get_next_line.c \
 
 OBJECTS =	$(SRCS:.c=.o)
