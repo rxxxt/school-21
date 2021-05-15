@@ -11,8 +11,25 @@ int	is_sorted(t_node *head)
 	return (1);
 }
 
+void	easy_algorithm()
+{
+
+}
+
+void	hard_algorithm()
+{
+
+}
+
 void	sorting_stack(t_stacks *stacks)
 {
+	if (stacks->a->size < 6)
+		easy_algorithm();
+	else
+		hard_algorithm();
+
+
+
 	while (!is_sorted(stacks->a->head) || stacks->b->size)
 	{
 		if (stacks->a->head && stacks->a->head->next

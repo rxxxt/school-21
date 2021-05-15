@@ -1,19 +1,13 @@
 #include "../../includes/stack.h"
 
-void	rotate_a(t_stacks *stacks)
+void	rotate(t_stack *stack)
 {
-	if (stacks->a->size > 1)
-		push_back(stacks->a, pop(stacks->a));
+	if (stack->size > 1)
+		push_back(stack, pop(stack));
 }
 
-void	rotate_b(t_stacks *stacks)
+void	rotate_a_and_b(t_stack *stack_a, t_stack *stack_b)
 {
-	if (stacks->b->size > 1)
-		push_back(stacks->b, pop(stacks->b));
-}
-
-void	rotate_a_and_b(t_stacks *stacks)
-{
-	rotate_a(stacks);
-	rotate_b(stacks);
+	rotate(stack_a);
+	rotate(stack_b);
 }

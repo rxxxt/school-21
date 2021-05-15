@@ -1,6 +1,6 @@
 #include "../../includes/stack.h"
 
-static void	swap_top_two(t_stack *stack)
+void	swap(t_stack *stack)
 {
 	int	tmp;
 
@@ -12,18 +12,8 @@ static void	swap_top_two(t_stack *stack)
 	}
 }
 
-void	swap_a(t_stacks *stacks)
+void	swap_a_and_b(t_stack *stack_a, t_stack *stack_b)
 {
-	swap_top_two(stacks->a);
-}
-
-void	swap_b(t_stacks *stacks)
-{
-	swap_top_two(stacks->b);
-}
-
-void	swap_a_and_b(t_stacks *stacks)
-{
-	swap_a(stacks);
-	swap_b(stacks);
+	swap(stack_a);
+	swap(stack_b);
 }

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef STACK_H
-#define STACK_H
+# define STACK_H
 
 # include "../libft/libft.h"
 # include <stdlib.h>
@@ -19,50 +19,32 @@
 # include <stddef.h>
 # define STACK_SIZE (1000)
 
-typedef struct	s_node
+typedef struct s_node
 {
 	int				data;
 	struct s_node	*next;
 }					t_node;
 
-typedef struct	s_stack
+typedef struct s_stack
 {
 	t_node	*head;
 	int		size;
 }			t_stack;
 
-typedef struct	s_stacks
-{
-	t_stack	*a;
-	t_stack	*b;
-}			t_stacks;
-
+t_stack		*initialize_stack(void);
+t_node		*new_node(int x);
+void		fill_stack(t_stack *stack, char **argv, int count);
 int			pop(t_stack *stack);
 int			pop_back(t_stack *stack);
-void		push(t_stack *stack, int x);
-void		push_back(t_stack *stack, int x);
-t_node		*ft_nodenew(int x);
-t_stacks	*initialize_stacks(void);
 int			correct_number(char *str);
-void		fill_stack(t_stack *stack, char **argv, int count);
+void		push(t_stack *stack, int x);
+void		swap(t_stack *stack);
+void		push_back(t_stack *stack, int x);
+void		swap_a_and_b(t_stack *stack_a, t_stack *stack_b);
+void		rotate(t_stack *stack);
+void		rotate_a_and_b(t_stack *stack_a, t_stack *stack_b);
+void		reverse_rotate(t_stack *stack);
+void		reverse_rotate_a_and_b(t_stack *stack_a, t_stack *stack_b);
 void		ft_exit(void);
-
-/*
- * 		Operations
- * */
-void		processing(char *line, t_stacks *stacks);
-void		swap_a(t_stacks *stacks);
-void		swap_b(t_stacks *stacks);
-void		swap_a_and_b(t_stacks *stacks);
-void		push_a(t_stacks *stacks);
-void		push_b(t_stacks *stacks);
-void		rotate_a(t_stacks *stacks);
-void		rotate_b(t_stacks *stacks);
-void		rotate_a_and_b(t_stacks *stacks);
-void		reverse_rotate_a(t_stacks *stacks);
-void		reverse_rotate_b(t_stacks *stacks);
-void		reverse_rotate_a_and_b(t_stacks *stacks);
-
-
 
 #endif

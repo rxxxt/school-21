@@ -10,12 +10,12 @@ DIR_OBJS		:=	objects/
 
 SRCS			:=	push_swap.c						\
 
-SRCS_STACK		:=	initialize_stacks.c				\
+SRCS_STACK		:=	initialize_stack.c				\
+					operations_pop.c				\
 					operations_push.c				\
-					operations_rotate.c				\
 					operations_reverse_rotate.c		\
+					operations_rotate.c				\
 					operations_swap.c				\
-					stack.c							\
 
 SRCS_BONUS		:=	checker.c						\
 
@@ -42,13 +42,13 @@ all:				$(DIR_OBJS) $(NAME)
 $(DIR_OBJS):
 	mkdir -p $@
 
-$(DIR_OBJS)%.o:		$(DIR_SRCS)stack/%.c includes/push_swap.h
+$(DIR_OBJS)%.o:		$(DIR_SRCS)stack/%.c includes/stack.h
 	$(CC) $(DEBUG) $(FLAGS) -c $< -o $@
 
 $(DIR_OBJS)%.o:		$(DIR_SRCS)$(NAME)/%.c includes/push_swap.h
 	$(CC) $(DEBUG) $(FLAGS) -c $< -o $@
 
-$(DIR_OBJS)%.o:		$(DIR_SRCS)$(BONUS)/%.c includes/push_swap.h
+$(DIR_OBJS)%.o:		$(DIR_SRCS)$(BONUS)/%.c includes/checker.h
 	$(CC) $(DEBUG) $(FLAGS) -c $< -o $@
 
 $(LIBFT):

@@ -6,23 +6,27 @@ void	ft_exit(void)
 	exit(EXIT_FAILURE);
 }
 
-t_stacks 	*initialize_stacks(void)
+t_node	*new_node(int x)
 {
-	t_stacks	*stack;
+	t_node	*new;
 
-	stack = malloc(sizeof(t_stacks));
+	new = malloc(sizeof(t_node));
+	if (!new)
+		return (NULL);
+	new->data = x;
+	new->next = NULL;
+	return (new);
+}
+
+t_stack	*initialize_stack(void)
+{
+	t_stack	*stack;
+
+	stack = malloc(sizeof(t_stack));
 	if (!stack)
 		exit(EXIT_FAILURE);
-	stack->a = malloc(sizeof(t_stack));
-	if (!stack->a)
-		exit(EXIT_FAILURE);
-	stack->b = malloc(sizeof(t_stack));
-	if (!stack->b)
-		exit(EXIT_FAILURE);
-	stack->a->head = NULL;
-	stack->a->size = 0;
-	stack->b->head = NULL;
-	stack->b->size = 0;
+	stack->head = NULL;
+	stack->size = 0;
 	return (stack);
 }
 
@@ -47,7 +51,7 @@ void	fill_stack(t_stack *stack, char **argv, int count)
 {
 	long	nb;
 	char	**arr;
-	int 	size;
+	int		size;
 
 	while (--count > 0)
 	{
