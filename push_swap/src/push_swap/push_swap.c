@@ -11,11 +11,6 @@ int	is_sorted(t_node *head)
 	return (1);
 }
 
-void	easy_algorithm()
-{
-
-}
-
 void	hard_algorithm()
 {
 
@@ -35,7 +30,7 @@ void	sorting_stack(t_stacks *stacks)
 		if (stacks->a->head && stacks->a->head->next
 			&& stacks->a->head->data > stacks->a->head->next->data)
 		{
-			swap_a(stacks);
+			swap(stacks->a);
 			write(1, "sa\n", 3);
 		}
 	}
@@ -43,15 +38,14 @@ void	sorting_stack(t_stacks *stacks)
 
 int	main(int argc, char **argv)
 {
-	t_stacks	*stacks;
+	t_stacks	stacks;
 
 	if (argc > 1)
 	{
-		stacks = initialize_stacks();
-		if (!stacks)
-			exit(EXIT_FAILURE);
-		fill_stack(stacks->a, argv, argc);
-		sorting_stack(stacks);
+		stacks.a = initialize_stack();
+		stacks.b = initialize_stack();
+		fill_stack(stacks.a, argv, argc);
+		sorting_stack(&stacks);
 	}
 	return (0);
 }
