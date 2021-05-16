@@ -10,14 +10,13 @@
 # define RRB (8)
 # define RRR (9)
 
-
 # include "../libft/libft.h"
 # include "stack.h"
 
 typedef struct s_action
 {
-	int 	count;
-	int 	action;
+	int	count;
+	int	action;
 }			t_action;
 
 typedef struct s_stacks

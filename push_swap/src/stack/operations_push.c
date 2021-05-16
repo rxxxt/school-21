@@ -24,20 +24,25 @@ void	push_back(t_stack *stack, int x)
 	else
 	{
 		node = stack->head;
-		while (node->next)
-			node = node->next;
-		node->next = new_node(x);
+		if (node)
+		{
+			while (node->next)
+				node = node->next;
+			node->next = new_node(x);
+		}
+		else
+			stack->head = new_node(x);
 		++stack->size;
 	}
 }
 
-void	push_a(t_stack *a, t_stack *b)
+void	push_a_pop_b(t_stack *a, t_stack *b)
 {
 	if (b->size > 0)
 		push(a, pop(b));
 }
 
-void	push_b(t_stack *a, t_stack *b)
+void	push_b_pop_a(t_stack *a, t_stack *b)
 {
 	if (a->size > 0)
 		push(b, pop(a));

@@ -1,11 +1,5 @@
 #include "../../includes/stack.h"
 
-void	ft_exit(void)
-{
-	ft_putendl_fd("Error", STDERR_FILENO);
-	exit(EXIT_FAILURE);
-}
-
 t_node	*new_node(int x)
 {
 	t_node	*new;
@@ -30,21 +24,22 @@ t_stack	*initialize_stack(void)
 	return (stack);
 }
 
-int	correct_number(char *str)
+t_stack	*copy_stack(t_stack *stack)
 {
-	while (*str == ' ')
-		str++;
-	if (*str == '-' || *str == '+')
-		str++;
-	if (!*str)
-		return (0);
-	while (*str)
+	t_stack	*copy;
+	t_node	*node;
+
+	copy = initialize_stack();
+	if (stack && stack->head)
 	{
-		if (!ft_isdigit(*str))
-			return (0);
-		str++;
+		node = stack->head;
+		while (node)
+		{
+			push_back(copy, node->data);
+			node = node->next;
+		}
 	}
-	return (1);
+	return (copy);
 }
 
 void	fill_stack(t_stack *stack, char **argv, int count)
@@ -56,6 +51,8 @@ void	fill_stack(t_stack *stack, char **argv, int count)
 	while (--count > 0)
 	{
 		arr = ft_split(argv[count], ' ');
+		if (!arr || !*arr)
+			ft_exit();
 		size = (int)ft_strarr_size(arr);
 		while (--size >= 0)
 		{
@@ -66,4 +63,17 @@ void	fill_stack(t_stack *stack, char **argv, int count)
 		}
 		ft_free_array(arr);
 	}
+}
+
+void	free_stack(t_stack *stack)
+{
+	t_node	*node;
+
+	while (stack->head)
+	{
+		node = stack->head;
+		stack->head = stack->head->next;
+		free(node);
+	}
+	free(stack);
 }

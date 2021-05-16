@@ -10,7 +10,6 @@ typedef struct s_stacks
 	t_stack	*b;
 }			t_stacks;
 
-int			is_sorted(t_node *head);
 void		processing(char *line, t_stacks *stacks);
 void		executing_instructions(t_stacks *stacks);
 

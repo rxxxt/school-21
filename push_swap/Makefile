@@ -8,16 +8,20 @@ DIR_SRCS		:=	src/
 
 DIR_OBJS		:=	objects/
 
-SRCS			:=	push_swap.c						\
+SRCS			:=	\
+					push_swap.c						\
 
-SRCS_STACK		:=	initialize_stack.c				\
+SRCS_STACK		:=	\
+					checks.c						\
+					initialize_stack.c				\
 					operations_pop.c				\
 					operations_push.c				\
 					operations_reverse_rotate.c		\
 					operations_rotate.c				\
 					operations_swap.c				\
 
-SRCS_BONUS		:=	checker.c						\
+SRCS_BONUS		:=	\
+					checker.c						\
 
 OBJS			:=	$(SRCS:.c=.o)
 OBJS_STACK		:=	$(SRCS_STACK:.c=.o)
