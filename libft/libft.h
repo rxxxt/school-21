@@ -47,6 +47,8 @@ int					ft_isdigit(int c);
 int					ft_isprint(int c);
 int					ft_lstsize(t_list *lst);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
+int					ft_min(int a, int b);
+int					ft_max(int a, int b);
 int					ft_nbrlen(const char *s);
 int					ft_revstrncmp(char *s1, char *s2, int n);
 int					ft_strcmp(char *s1, char *s2);
