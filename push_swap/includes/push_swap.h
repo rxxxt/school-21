@@ -15,17 +15,21 @@
 
 typedef struct s_action
 {
-	int	count;
 	int	action;
+	int	count;
 }			t_action;
 
 typedef struct s_stacks
 {
 	t_stack	*a;
 	t_stack	*b;
-	t_node	*sa;
-	t_node	*sb;
 }			t_stacks;
+
+typedef struct s_calc
+{
+	t_list	*stack_a;
+	t_list	*stack_b;
+}			t_calc;
 
 void		push_a(t_stacks *stacks);
 void		push_b(t_stacks *stacks);
@@ -38,7 +42,7 @@ void		rotate_a_b(t_stacks *stacks);
 void		swap_a(t_stacks *stacks);
 void		swap_b(t_stacks *stacks);
 void		swap_a_b(t_stacks *stacks);
-int			is_sorted(t_node *head);
 void		easy_algorithm(t_stacks *stacks);
+void		hard_algorithm(t_stacks *stacks);
 
 #endif

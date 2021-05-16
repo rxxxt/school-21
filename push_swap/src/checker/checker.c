@@ -69,11 +69,11 @@ void	executing_instructions(t_stacks *stacks)
 	int		flag;
 
 	flag = 1;
-//	print(stacks);
-//	t_stacks *stacks1 = malloc(sizeof(t_stacks));
-//	stacks1->a = copy_stack(stacks->a);
-//	stacks1->b = initialize_stack();
-//	print(stacks1);
+	print(stacks);
+	t_stacks *stacks1 = malloc(sizeof(t_stacks));
+	stacks1->a = copy_stack(stacks->a);
+	stacks1->b = initialize_stack();
+	print(stacks1);
 	while (flag)
 	{
 		flag = get_next_line(STDIN_FILENO, &line);
@@ -98,7 +98,6 @@ int	main(int argc, char **argv)
 		stacks.a = initialize_stack();
 		stacks.b = initialize_stack();
 		fill_stack(stacks.a, argv, argc);
-		there_are_duplicates(stacks.a);
 		copy = copy_stack(stacks.a);
 		if (stacks.a->size > 1 && there_are_duplicates(copy))
 			ft_exit();
