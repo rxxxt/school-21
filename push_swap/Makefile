@@ -9,13 +9,16 @@ DIR_SRCS		:=	src/
 DIR_OBJS		:=	objects/
 
 SRCS			:=	\
+					adjustment.c					\
 					easy_algorithm.c				\
+					normal_algorithm.c				\
 					hard_algorithm.c				\
 					push.c							\
 					push_swap.c						\
 					reverse_rotate.c				\
 					rotate.c						\
 					swap.c							\
+					utils.c							\
 
 SRCS_STACK		:=	\
 					checks.c						\

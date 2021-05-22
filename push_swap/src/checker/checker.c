@@ -1,39 +1,4 @@
 #include "../../includes/checker.h"
-#include <stdio.h>
-
-void	print(t_stacks *stacks)
-{
-	t_node	*a;
-	t_node	*b;
-
-	a = stacks->a->head;
-	b = stacks->b->head;
-	printf("  стэк а  |  стэк б  \n");
-	fflush(stdout);
-	while (a || b)
-	{
-		if (a)
-		{
-			printf("%10d|", a->data);
-			fflush(stdout);
-		}
-		else
-			write(1, "          |", 11);
-		if (b)
-		{
-			printf("%10d\n", b->data);
-			fflush(stdout);
-		}
-		else
-			write(1, "\n", 1);
-		if (a)
-			a = a->next;
-		if (b)
-			b = b->next;
-	}
-	printf("размер стэка а = %d | размер стэка а = %d\n", stacks->a->size,
-		stacks->b->size);
-}
 
 void	processing(char *line, t_stacks *stacks)
 {
@@ -66,25 +31,17 @@ void	processing(char *line, t_stacks *stacks)
 void	executing_instructions(t_stacks *stacks)
 {
 	char	*line;
-	int		flag;
+	int		sign;
 
-	flag = 1;
-	print(stacks);
-	t_stacks *stacks1 = malloc(sizeof(t_stacks));
-	stacks1->a = copy_stack(stacks->a);
-	stacks1->b = initialize_stack();
-	print(stacks1);
-	while (flag)
+	sign = 1;
+	while (sign)
 	{
-		flag = get_next_line(STDIN_FILENO, &line);
-		if (flag == -1)
+		sign = get_next_line(STDIN_FILENO, &line);
+		if (sign == -1)
 			ft_exit();
-		else if (flag)
-		{
+		else if (sign == 1)
 			processing(line, stacks);
-			print(stacks);
-			free(line);
-		}
+		free(line);
 	}
 }
 
@@ -107,6 +64,8 @@ int	main(int argc, char **argv)
 			write(STDOUT_FILENO, "OK\n", 3);
 		else
 			write(STDOUT_FILENO, "KO\n", 3);
+		free_stack(stacks.a);
+		free_stack(stacks.b);
 	}
 	return (0);
 }
