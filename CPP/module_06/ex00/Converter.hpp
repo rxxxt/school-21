@@ -2,6 +2,8 @@
 # define CONVERTER_HPP
 
 # include <iostream>
+# include <iomanip>
+# include <cmath>
 
 
 class Converter {
@@ -13,18 +15,18 @@ public:
 	};
 
 private:
-	void *value_;
+	double value_;
 
 public:
-	Converter(char *str);
-	Converter(const Converter& other);
-	Converter& operator=(const Converter& other);
+	explicit Converter(char *str);
+	Converter(const Converter &other);
+	Converter &operator=(const Converter &other);
 	~Converter();
 
-//	void convertToOtherTypes(char c);
-//	void convertToOtherTypes(double d);
-//	void convertToOtherTypes(float f);
-//	void convertToOtherTypes(int i);
+	void printChar();
+	void printInt();
+	void printFloat();
+	void printDouble();
 
 private:
 	Converter();

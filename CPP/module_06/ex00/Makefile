@@ -7,6 +7,9 @@ CFLAGS		:=	-Wall -Wextra -Werror
 DEBUG		:=	#-g
 
 SRCS		:=	main.cpp				\
+				Converter.cpp			\
+
+INCLUDES	:=	Converter.hpp
 
 OBJ_DIR		:=	objects/
 
@@ -22,7 +25,7 @@ $(OBJ_DIR):
 $(NAME):		$(OBJS)
 	$(CPP) $(DEBUG) $^ -o $@
 
-$(OBJ_DIR)%.o:	%.cpp Bureaucrat.hpp
+$(OBJ_DIR)%.o:	%.cpp $(INCLUDES)
 	$(CPP) $(DEBUG) $(CFLAGS) -c $< -o $@
 
 clean:

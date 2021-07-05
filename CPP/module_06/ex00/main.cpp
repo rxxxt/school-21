@@ -1,36 +1,20 @@
-#include <iostream>
-//#include "Converter.hpp"
+#include "Converter.hpp"
 
 int main(int argc, char *argv[]) {
 	if (argc == 2 && *argv[1]) {
-		if (std::strlen(argv[1]) == 1) {
-			char c = *argv[1];
-
+		try {
+			Converter converter(argv[1]);
+			converter.printChar();
+			converter.printInt();
+			converter.printFloat();
+			converter.printDouble();
 		}
-		char* endPtr;
-		long int i = std::strtol(argv[1], &endPtr, 10);
-		if (!*endPtr) {
-
+		catch (std::exception &ex) {
+			std::cout << "char: " << ex.what() << std::endl;
+			std::cout << "int: " << ex.what() << std::endl;
+			std::cout << "float: " << ex.what() << std::endl;
+			std::cout << "double: " << ex.what() << std::endl;
 		}
-		else {
-			double d = std::strtod(argv[1], &endPtr);
-			std::cout << endPtr
-				<< std::endl;
-		}
-
-
-//		Converter literal(argv[1]);
-//		char c = literal;
-//		std::cout << "char: " << c << std::endl;
-//
-//		int i = literal;
-//		std::cout << "int: " << i << std::endl;
-//
-//		float f = literal;
-//		std::cout << "float: " << f << std::endl;
-
-//		double d = literal;
-//		std::cout << "double: " << d << std::endl;
 	}
 	return 0;
 }
