@@ -5,8 +5,12 @@ DIR_SRCS		:=	src/
 DIR_OBJS		:=	objects/
 
 SRCS			:=	\
-					main.c					\
+					error_management.c		\
 					ft_atoi.c				\
+					life_of_philosopher.c	\
+					main.c					\
+					observer.c				\
+					time_managment.c		\
 
 INCLUDES		:=	includes/philo.h		\
 
@@ -20,7 +24,7 @@ CC				:=	gcc
 
 DEBUG			:=	#-g
 
-FLAGS			:=	#-Wall -Wextra -Werror
+FLAGS			:=	-Wall -Wextra -Werror
 
 all:				$(DIR_OBJS) $(NAME)
 

@@ -1,5 +1,4 @@
 #include "../includes/philo.h"
-#include <limits.h>
 
 int	ft_atoi(const char *str)
 {
