@@ -13,6 +13,9 @@ void	initialization(t_data *data, int argc, char **argv)
 	data->min_number_of_meals = -1;
 	if (argc == 6)
 		data->min_number_of_meals = ft_atoi(argv[5]);
+	data->timeout = data->time_to_die;
+	if (data->timeout < data->time_to_eat)
+		data->timeout = data->time_to_eat;
 	data->start = get_time_in_ms();
 	pthread_mutex_init(&data->freedom_of_speech, NULL);
 	data->philo = (t_philo *)malloc(sizeof(t_philo) * data->number_of_philo);
@@ -45,7 +48,7 @@ int	main(int argc, char **argv)
 		++i;
 	}
 	observe_the_philosophers(&data);
-	ft_usleep(100);
+	ft_usleep(data.timeout);
 	free(data.philo);
 	return (0);
 }

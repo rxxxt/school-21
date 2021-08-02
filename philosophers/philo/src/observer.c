@@ -38,11 +38,13 @@ static int	is_the_philosopher_dead(t_data *data)
 
 void	observe_the_philosophers(t_data *data)
 {
+	data->start = get_time_in_ms();
 	while (data->existence)
 	{
 		if (is_the_philosopher_dead(data))
 			break ;
 		if (data->min_number_of_meals > 0)
 			checking_the_number_of_meals(data);
+//		ft_usleep(1);
 	}
 }

@@ -27,9 +27,9 @@ static void	put_the_forks(t_data *data, int left, int right)
 static void	life_cycle(t_data *data, int left, int right, int number)
 {
 	take_the_forks(data, left, right, number);
-	++data->philo[left].number_of_meals;
 	data->philo[left].last_meal = (int)(get_time_in_ms() - data->start);
 	what_does_a_philosopher_do(data, "is eating", data->time_to_eat, number);
+	++data->philo[left].number_of_meals;
 	put_the_forks(data, left, right);
 	what_does_a_philosopher_do(data, "is sleeping", data->time_to_sleep,
 		number);
@@ -49,7 +49,7 @@ void	*life_of_philosopher(void *args)
 	if (number == data->number_of_philo)
 		right = 0;
 	if (number % 2 == 0)
-		ft_usleep(1);
+		ft_usleep(2);
 	i = 1;
 	while (data->existence)
 	{

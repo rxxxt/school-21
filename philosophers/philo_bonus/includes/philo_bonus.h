@@ -28,7 +28,6 @@ typedef struct s_data
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					min_number_of_meals;
-	int					timeout;
 	long				start;
 	pthread_mutex_t		freedom_of_speech;
 	t_philo				*philo;
