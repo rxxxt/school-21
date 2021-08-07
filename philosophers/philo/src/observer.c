@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   observer.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tredfort <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/07 22:56:35 by tredfort          #+#    #+#             */
+/*   Updated: 2021/08/07 22:56:37 by tredfort         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/philo.h"
 
 static void	checking_the_number_of_meals(t_data *data)
@@ -45,6 +57,5 @@ void	observe_the_philosophers(t_data *data)
 			break ;
 		if (data->min_number_of_meals > 0)
 			checking_the_number_of_meals(data);
-//		ft_usleep(1);
 	}
 }
