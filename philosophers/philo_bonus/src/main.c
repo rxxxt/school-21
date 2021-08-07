@@ -1,113 +1,90 @@
-#include "../includes/philo.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tredfort <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/07 22:40:11 by tredfort          #+#    #+#             */
+/*   Updated: 2021/08/07 22:40:13 by tredfort         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-long	get_time_in_ms()
+#include "../includes/philo_bonus.h"
+
+static void	destroy_semaphores(t_data *data)
 {
-	struct	timeval tv;
-	long	time;
-
-	gettimeofday(&tv, NULL);
-	time = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
-	return (time);
+	sem_close(data->sem_freedom_of_speech);
+	sem_close(data->sem_waiter);
+	sem_close(data->sem_forks);
+	sem_unlink(PRINT);
+	sem_unlink(WAITER);
+	sem_unlink(FORKS);
 }
 
-void	set_parameters(t_data *data, int argc, char **argv)
+static void	kill_all_processes(int *pid, int size)
 {
-	data->number = 0;
-	data->number_of_philosophers = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	data->min_number_of_meals = -1;
-	if (argc == 6)
-		data->min_number_of_meals = ft_atoi(argv[5]);
-	data->start = get_time_in_ms();
+	int	i;
+
+	i = 0;
+	while (i < size)
+		kill(pid[i++], SIGKILL);
 }
 
-void	take_forks(t_data *data)
+static void	start_processes(t_data *data, int *pid)
 {
-//	printf("%ul ");
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_philo)
+	{
+		pid[i] = fork();
+		if (pid[i] < 0)
+			error_manager(FORK_FAILED);
+		data->number = i + 1;
+		if (!pid[i])
+		{
+			observe_the_philosophers(data);
+			exit(0);
+		}
+		++i;
+	}
 }
 
-void	put_forks(t_data *data)
+static void	wait_for_processes(t_data *data, int *pid)
 {
+	int	i;
+	int	status;
 
+	i = 0;
+	while (i < data->number_of_philo)
+	{
+		waitpid(0, &status, 0);
+		if (status)
+		{
+			kill_all_processes(pid, data->number_of_philo);
+			break ;
+		}
+		i++;
+	}
 }
 
-void	eat(t_data *data)
-{
-
-}
-
-void	think(t_data *data)
-{
-
-}
-
-void	nap(t_data *data)
-{
-
-}
-
-void	ft_usleep(long ms)
-{
-	long	start;
-
-	start = get_time_in_ms();
-	while (get_time_in_ms() - start < ms)
-		usleep(1);
-}
-
-void	*life_cycle_of_philosopher(void *args)
-{
-
-	t_data *data = (t_data *)args;
-
-//	printf("A = %d\n", a);
-
-//	long	start;
-//
-//	start = get_time_in_ms();
-//	ft_usleep(100);
-//	printf("%ld\n", get_time_in_ms() - start);
-//	while (1)
-//	{
-//		take_forks(data);
-//		eat(data);
-//		put_forks(data);
-//		nap(data);
-//		think(data);
-//	}
-//	a++;
-	int a = 0;
-	pthread_mutex_lock(data->mut);
-	a = data->number++;
-	printf("A = %d\n", a);
-	pthread_mutex_unlock(data->mut);
-
-	return (NULL);
-}
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data	data;
-	int		i;
+	int		*pid;
 
 	if (argc != 5 && argc != 6)
-	{
-		printf("ERROR: incorrect number of arguments\n");
-		return (1);
-	}
-	set_parameters(&data, argc, argv);
-	data.thread = malloc(sizeof(pthread_t) * data.number_of_philosophers);
-	i = 0;
-	data.mut = malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(data.mut, NULL);
-	while (i < data.number_of_philosophers)
-	{
-		pthread_create(&data.thread[i++], NULL, life_cycle_of_philosopher, (void *)&data);
-	}
-	i = 0;
-	while (i < data.number_of_philosophers)
-		pthread_join(data.thread[i++], NULL);
+		error_manager(INCORRECT_NUMBER_OF_ARGUMENTS);
+	if (!valid_arguments(argc, argv))
+		error_manager(INVALID_ARGUMENT);
+	initialization(&data, argc, argv);
+	pid = (int *)malloc(sizeof(int) * data.number_of_philo);
+	if (!pid)
+		error_manager(NO_MEMORY_ALLOCATED);
+	start_processes(&data, pid);
+	wait_for_processes(&data, pid);
+	destroy_semaphores(&data);
+	free(pid);
 	return (0);
 }
