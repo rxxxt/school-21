@@ -12,7 +12,7 @@ ScavTrap::ScavTrap(std::string const name) :
 		_meleeAttackDamage(20),
 		_rangedAttackDamage(15),
 		_armorDamageReduction(3) {
-	std::cout << BYELLOW << "<" << name << ">" << RESET << PURPLE << " brand new assault robot FR4G-TP came off the assembly line\n" << RESET;
+	std::cout << BYELLOW << "<" << name << ">" << RESET << PURPLE << " ScavTrap robot is ready to work and defend!\n" << RESET;
 }
 
 ScavTrap::ScavTrap(ScavTrap const & other) :
@@ -51,8 +51,8 @@ ScavTrap &ScavTrap::operator=(ScavTrap const & other) {
 
 void ScavTrap::rangedAttack(const std::string & target) {
 	if (_hitPoints > 0) {
-		std::cout << RED << "FR4G-TP " << BYELLOW << "<" << _name << ">" << RESET << RED " attacks "
-				  << BYELLOW "<" << target << ">" << RESET << RED << " at range, causing <";
+		std::cout << GRAY << "ScavTrap " << BYELLOW << "<" << _name << ">" << RESET << GRAY " attacks "
+				  << BYELLOW "<" << target << ">" << RESET << GRAY << " at range, causing <";
 		if (_rangedAttackDamage < _hitPoints)
 			std::cout << _rangedAttackDamage;
 		else
@@ -63,8 +63,8 @@ void ScavTrap::rangedAttack(const std::string & target) {
 
 void ScavTrap::meleeAttack(const std::string &target) {
 	if (_hitPoints > 0) {
-		std::cout << RED << "FR4G-TP " << BYELLOW << "<" << _name << ">" << RESET << RED " attacks "
-				  << BYELLOW "<" << target << ">" << RESET << RED << " in melee, dealing <";
+		std::cout << GRAY << "ScavTrap " << BYELLOW << "<" << _name << ">" << RESET << GRAY " attacks "
+				  << BYELLOW "<" << target << ">" << RESET << GRAY << " in melee, dealing <";
 		if (_meleeAttackDamage < _hitPoints)
 			std::cout << _meleeAttackDamage;
 		else
@@ -75,7 +75,7 @@ void ScavTrap::meleeAttack(const std::string &target) {
 
 void ScavTrap::takeDamage(unsigned int amount) {
 	if (_hitPoints > 0) {
-		std::cout << RED << "FR4G-TP " << BYELLOW << "<" << _name << ">" << RESET << RED << " takes <";
+		std::cout << GRAY << "ScavTrap " << BYELLOW << "<" << _name << ">" << RESET << GRAY << " takes <";
 		if (amount <= _armorDamageReduction)
 			std::cout << "0> points of damage!\n";
 		else if (amount - _armorDamageReduction < _hitPoints) {
@@ -90,11 +90,11 @@ void ScavTrap::takeDamage(unsigned int amount) {
 }
 
 void ScavTrap::beRepaired(unsigned int amount) {
-	std::cout << RED << "FR4G-TP " << BYELLOW << "<" << _name << ">" << RESET;
+	std::cout << GRAY << "ScavTrap " << BYELLOW << "<" << _name << ">" << RESET;
 	if (_hitPoints == 0)
-		std::cout << RED << " is dead!\n";
+		std::cout << GRAY << " is dead!\n";
 	else if (_hitPoints < _maxHitPoints) {
-		std::cout << RED << " has got <";
+		std::cout << GRAY << " has got <";
 		if (_hitPoints + amount > _maxHitPoints) {
 			std::cout << _maxHitPoints - _hitPoints;
 			_hitPoints = _maxHitPoints;
@@ -107,25 +107,32 @@ void ScavTrap::beRepaired(unsigned int amount) {
 	}
 }
 
-void ScavTrap::vaulthunter_dot_exe(const std::string &target) {
-	unsigned int	launch_cost(25);
-	std::string randomAttack[5] = {
-			"Funzerker",
-			"Shhhhh... Trap",
-			"Miniontrap",
-			"Blightbot",
-			"Mechromagician"
+void ScavTrap::challengeNewcomer(const std::string &target) {
+	unsigned int	launch_cost(15);
+	std::string randomSubject[5] = {
+			"Battle Star",
+			"Take It All!",
+			"Gunslinger",
+			"Oh, the Humanity",
+			"Pickle Picker"
+	};
+	std::string randomChallenge[5] = {
+			"Dance with B4R-BOT in Moxxi's Up Over bar",
+			"Defeat Deadlift without losing your shields",
+			"Kill enemies with a Nova Shield burst",
+			"Destroy all surveillance cameras",
+			"Use all of the GREEN jump pads"
 	};
 
 	if (_hitPoints > 0) {
-		std::cout << RED << "FR4G-TP " << BYELLOW << "<" << _name << ">" << RESET;
+		std::cout << GRAY << "ScavTrap " << BYELLOW << "<" << _name << ">" << RESET;
 		if (_energyPoints >= launch_cost) {
 			_energyPoints -= launch_cost;
-			std::cout << RED << " attacks " << BYELLOW "<" << target << ">," << RESET
-					  << RED << " using the " << randomAttack[rand() % 5] << " and deals <35> points of damage!";
+			std::cout << GRAY << " challenges " << BYELLOW "<" << target << ">, " << RESET << GRAY << randomSubject[rand() % 5] << "!\n" << RESET;
+			std::cout << CYAN << randomChallenge[rand() % 5] << "!" << RESET;
 		}
 		else
-			std::cout << RED << " tried to attack " << BYELLOW "<" << target << ">," << RESET << RED << " but he doesn't have enough energy!" << RESET;
+			std::cout << GRAY << " tried to challenge " << BYELLOW "<" << target << ">," << RESET << GRAY << " but he lacks imagination!" << RESET;
 		std::cout << std::endl;
 	}
 }

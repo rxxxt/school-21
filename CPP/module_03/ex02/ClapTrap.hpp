@@ -1,7 +1,7 @@
-#ifndef SCAVTRAP_HPP
-# define SCAVTRAP_HPP
+#ifndef CLAPTRAP_HPP
+# define CLAPTRAP_HPP
 
-#include <iostream>
+# include <iostream>
 
 # define RED		"\033[0;31m"
 # define GREEN		"\033[0;32m"
@@ -21,21 +21,27 @@
 # define RESET		"\033[0m"
 
 
-class ScavTrap {
+class ClapTrap {
 
 public:
-	ScavTrap(std::string const name);
-	ScavTrap(ScavTrap const & other);
-	~ScavTrap();
-	ScavTrap &operator=(ScavTrap const & other);
+	ClapTrap(std::string name,
+			 unsigned int	hitPoints,
+			 unsigned int	maxHitPoints,
+			 unsigned int	energyPoints,
+			 unsigned int	maxEnergyPoints,
+			 unsigned int	level,
+			 unsigned int	meleeAttackDamage,
+			 unsigned int	rangedAttackDamage,
+			 unsigned int	armorDamageReduction);
+	ClapTrap(ClapTrap const & other);
+	ClapTrap &operator=(ClapTrap const & other);
 	void			rangedAttack(std::string const & target);
 	void			meleeAttack(std::string const & target);
 	void			takeDamage(unsigned int amount);
 	void			beRepaired(unsigned int amount);
-	void			challengeNewcomer(std::string const & target);
 
-private:
-	ScavTrap();
+protected:
+	ClapTrap();
 	void			charger();
 	void			levelUp();
 	std::string		_name;
