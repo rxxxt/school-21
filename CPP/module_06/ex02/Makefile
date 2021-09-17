@@ -7,6 +7,9 @@ CFLAGS		:=	-Wall -Wextra -Werror
 DEBUG		:=	#-g
 
 SRCS		:=	main.cpp	\
+				A.cpp		\
+				B.cpp		\
+				C.cpp		\
 
 INCLUDES	:=	Base.hpp	\
 				A.hpp		\

@@ -1,4 +1,4 @@
-NAME		:=	convert
+NAME		:=	ex01
 
 CPP			:=	clang++
 
@@ -22,7 +22,7 @@ $(OBJ_DIR):
 $(NAME):		$(OBJS)
 	$(CPP) $(DEBUG) $^ -o $@
 
-$(OBJ_DIR)%.o:	%.cpp Bureaucrat.hpp
+$(OBJ_DIR)%.o:	%.cpp
 	$(CPP) $(DEBUG) $(CFLAGS) -c $< -o $@
 
 clean:

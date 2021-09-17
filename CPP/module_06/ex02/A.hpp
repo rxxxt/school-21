@@ -10,4 +10,6 @@ class A : public Base {
 };
 
 
+std::ostream& operator<<(std::ostream &o, const A&);
+
 #endif

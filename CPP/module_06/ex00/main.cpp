@@ -3,13 +3,10 @@
 int main(int argc, char *argv[]) {
 	if (argc == 2 && *argv[1]) {
 		try {
-			Converter converter(argv[1]);
-			converter.printChar();
-			converter.printInt();
-			converter.printFloat();
-			converter.printDouble();
+			converter(argv[1]);
 		}
 		catch (std::exception &ex) {
+			std::cout << "type of literal: not detected" << std::endl;
 			std::cout << "char: " << ex.what() << std::endl;
 			std::cout << "int: " << ex.what() << std::endl;
 			std::cout << "float: " << ex.what() << std::endl;
