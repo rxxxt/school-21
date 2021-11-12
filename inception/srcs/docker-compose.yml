@@ -1,0 +1,77 @@
+version: "3.9"
+
+services:
+  nginx:
+    container_name: nginx
+    image: nginx
+    depends_on:
+      - wordpress
+    build: 
+      context: requirements/nginx
+      args:
+        - DOMAIN_NAME
+        - CERTS_
+    ports:
+      - "443:443"
+    volumes:
+      - wp:/var/www/html
+    networks:
+      - inception
+  
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    depends_on:
+      - mariadb
+    build:
+      context: requirements/wordpress
+      args:
+        - DB_NAME
+        - DB_HOST
+        - MYSQL_USER
+        - MYSQL_PASSWORD
+    expose:
+      - "9000"
+    volumes:
+      - wp:/var/www/html
+    networks:
+      - inception
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    restart: always
+    build:
+      context: requirements/mariadb
+      args:
+        - DB_NAME
+        - MYSQL_USER
+        - MYSQL_PASSWORD
+        - MYSQL_ROOT_PASSWORD
+    expose: 
+      - "3306"
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - inception
+
+volumes:
+  db:
+    name: db
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/tredfort/data/db
+  wp:
+    name: wp
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/tredfort/data/wp
+
+networks:
+  inception:
+    name: inception
+    driver: bridge
