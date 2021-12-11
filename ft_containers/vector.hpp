@@ -38,12 +38,10 @@ namespace ft {
 				const allocator_type& alloc = allocator_type())
 				:allocator(alloc)
 		{
-			if (n>max_size())
-				throw std::length_error("vector");
+			check_range(n);
 			initialization(n);
-			while (n--) {
+			while (n--)
 				allocator.construct(end++, value);
-			}
 		}
 
 		template<class InputIterator>
@@ -52,23 +50,19 @@ namespace ft {
 				:allocator(alloc)
 		{
 			size_type n = last-first;
-			if (n>max_size())
-				throw std::length_error("vector");
+			check_range(n);
 			initialization(n);
-			while (first!=last) {
+			while (first!=last)
 				allocator.construct(end++, *first++);
-			}
 		}
 
 		vector(const vector& x)
 				:allocator(x.allocator)
 		{
-			size_type n = x.end-x.begin;
-			initialization(n);
+			initialization(x.size());
 			pointer first = x.begin;
-			while (first!=x.end) {
+			while (first!=x.end)
 				allocator.construct(end++, *first++);
-			}
 		}
 
 		~vector()
@@ -160,17 +154,15 @@ namespace ft {
 
 		void reserve(size_type n)
 		{
+			check_range(n);
 			if (n>capacity()) {
 				pointer first = begin;
 				size_type size = size();
 				size_type size_capacity = capacity();
 				initialization(n);
-				for (size_type i = 0; i<size; ++i) {
-					
-				}
-				while (size-->0)
-					*end++ = *first++;
-				allocator.deallocate();
+				for (size_type i = 0; i<size; ++i)
+					*end++ = first[i];
+				allocator.deallocate(first, size_capacity);
 			}
 		}
 
@@ -188,7 +180,6 @@ namespace ft {
 		{
 			if (n>size())
 				throw std::out_of_range("vector");
-
 			return *(begin+n);
 		}
 
@@ -232,7 +223,8 @@ namespace ft {
 		void push_back(const value_type& value)
 		{
 			if (end==end_capacity) {
-				//TODO:
+				reserve(capacity()*2);
+				*end++ = value;
 			}
 			allocator.construct(end++, value);
 		}
@@ -279,9 +271,8 @@ namespace ft {
 
 		void clear()
 		{
-			for (size_type size = size(); size>0; --size) {
+			for (size_type size = size(); size>0; --size)
 				allocator.destroy(--end);
-			}
 		}
 
 		allocator_type get_allocator() const
@@ -295,6 +286,12 @@ namespace ft {
 			begin = allocator.allocate(n);
 			end = begin;
 			end_capacity = begin+n;
+		}
+
+		void check_range(size_type n)
+		{
+			if (n>max_size())
+				throw std::length_error("vector");
 		}
 	};
 
